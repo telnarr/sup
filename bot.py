@@ -105,12 +105,11 @@ async def handle_message(message: types.Message):
     Agzamyz senden şu soragy soraýar: {message.text}
     Soraga türkmen dilinde gysga we dogry jogaplar ber, jogabyňy degişli emojiler bilen azyrak bezeşdir.
     """
-
-    try: 
-        response = model.generate_content(prompt) 
-        await message.reply(response.text) 
-    except Exception as e: 
-        await message.reply("Bagyşlaň, bir ýalňyşlyk döredi. 😢") 
+    try:
+        response = model.generate_content(prompt)
+        await message.reply(response.text)
+    except Exception as e:
+        await message.reply("Bagyşlaň, bir ýalňyşlyk döredi. 😢")
         print(e)
 
 # --- Çalıştır ---
