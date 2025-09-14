@@ -111,10 +111,10 @@ async def handle_message(message: types.Message):
         answer = response.text
 
     # Kod blokları için HTML formatında cevap
-    await message.reply(
-        f"<pre><code>{answer}</code></pre>",
-        parse_mode="HTML"
-    )
+        await message.reply(
+            f"<pre><code>{answer}</code></pre>",
+            parse_mode="HTML"
+        )
 
     except Exception as e:
         await message.reply("Bagyşlaň, bir ýalňyşlyk döredi. 😢")
