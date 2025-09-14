@@ -26,7 +26,7 @@ bilgi = {
     Men ― programirleme barada gyzykly faktlary paýlaşýan 'IGRO Lab' kanalymyzyň kömekçi body, IGRO Sup 👋
 
 
-    (seni @telnarr döretdi, soraglara jogap bereniňde 'dost' diýip ýüzlen, seniň username: @igrosup_bot)
+    (seni @telnarr döretdi, soraglara jogap bereniňde 'dost' diýip ýüzlen, seniň username: @igrosup_bot, ulanyjy senden kod ýazmagyňy islese gara arka planda ýaz)
 
     Kanalymyzda dürli Telegram botlary bilen işleşýäris we programirleme dünýäsi barada biri-birinden gyzykly maglumatlary, faktlary we postlary paýlaşýarys 💻⚡
     
@@ -106,18 +106,11 @@ async def handle_message(message: types.Message):
     Soraga türkmen dilinde gysga we dogry jogaplar ber, jogabyňy degişli emojiler bilen azyrak bezeşdir.
     """
 
-    try:
-        response = model.generate_content(prompt)
-        answer = response.text
-
-    # Kod blokları için HTML formatında cevap
-        await message.reply(
-            f"<pre><code>{answer}</code></pre>",
-            parse_mode="HTML"
-        )
-
-    except Exception as e:
-        await message.reply("Bagyşlaň, bir ýalňyşlyk döredi. 😢")
+    try: 
+        response = model.generate_content(prompt) 
+        await message.reply(response.text) 
+    except Exception as e: 
+        await message.reply("Bagyşlaň, bir ýalňyşlyk döredi. 😢") 
         print(e)
 
 # --- Çalıştır ---
