@@ -103,11 +103,19 @@ async def handle_message(message: types.Message):
     prompt = f"""
     Sen Telegramda kömekçi bir Bot. Sende şu maglumatlar bar: {bilgi}.
     Agzamyz senden şu soragy soraýar: {message.text}
-    Soraga gysga we dogry jogaplar ber, jogabyňy degişli emojiler bilen azyrak bezeşdir.
+    Soraga türkmen dilinde gysga we dogry jogaplar ber, jogabyňy degişli emojiler bilen azyrak bezeşdir.
     """
+
     try:
         response = model.generate_content(prompt)
-        await message.reply(response.text)
+        answer = response.text
+
+    # Kod blokları için HTML formatında cevap
+    await message.reply(
+        f"<pre><code>{answer}</code></pre>",
+        parse_mode="HTML"
+    )
+
     except Exception as e:
         await message.reply("Bagyşlaň, bir ýalňyşlyk döredi. 😢")
         print(e)
