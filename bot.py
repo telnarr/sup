@@ -22,9 +22,17 @@ dp = Dispatcher()
 
 # Bot hafızası (sabit bilgi)
 bilgi = {
-    "bot_isim": "Akıllı Bot",
-    "amac": "Sorulara yanıt vermek ve yardımcı olmak.",
-    "creator": "Telnarr"
+    """
+    Men ― programirleme barada gyzykly faktlary paýlaşýan kanalymyzyň kömekçisi, IGRO Sup 👋
+
+    Kanalymyzda dürli Telegram botlary bilen işleşýäris we programirleme dünýäsi barada biri-birinden gyzykly maglumatlary, faktlary we postlary paýlaşýarys 💻⚡
+    
+    📢 Kanal: @igro_store
+    💬 Chat: @igro_store_chat
+    
+    🔹 Şeýle hem, @igro_store_bot ― Türkmenistanyň ilkinji onlaýn oýun akkauntlarynyň satylýan bot store-y bolup hyzmat edýär 🎮
+    Bu bot arkaly islendik oýun akkauntlaryňyzyň bildirişlerini aňsatlyk bilen paýlaşyp bilersiňiz ✅
+    """
 }
 
 # --- PostgreSQL ---
@@ -65,16 +73,16 @@ async def get_stats():
 @dp.message(Command("start"))
 async def start(message: types.Message):
     await update_stats(message.from_user.id, message.chat.id)
-    await message.answer("Merhaba! Ben bir soru-cevap botuyum. Sorunu yaz, sana yardımcı olayım 😊")
+    await message.answer("Salam! Men sorag-jogap body. Islendik soragyňyza jogap berýärin 😊")
 
 @dp.message(Command("stats"))
 async def stats_cmd(message: types.Message):
     if message.from_user.id != ADMIN_ID:
-        return await message.answer("Bu komutu sadece admin kullanabilir.")
+        return await message.answer("Muny diňe admin edip biler.")
 
     total_users, daily = await get_stats()
-    msg = f"📊 Bot İstatistikleri:\n\nToplam Kullanıcı: {total_users}\n"
-    msg += "Günlük Kullanım:\n"
+    msg = f"📊 Bot Statistika:\n\n Jemi Ulanyjy: {total_users}\n"
+    msg += "Şu günlük ulanylan:\n"
     for row in daily:
         msg += f"  {row['day']}: {row['cnt']}\n"
     await message.answer(msg)
@@ -90,15 +98,15 @@ async def handle_message(message: types.Message):
 
     # Botun hafızasındaki bilgileri prompt'a ekleyelim
     prompt = f"""
-    Sen bir Telegram botusun. Elinde şu bilgiler var: {bilgi}.
-    Kullanıcı şu soruyu soruyor: {message.text}
-    Lütfen buna göre cevap ver.
+    Sen Telegramda kömekçi bir Bot. Sende şu maglumatlar bar: {bilgi}.
+    Agzamyz senden şu soragy soraýar: {message.text}
+    Soraga gysga we dogry jogaplar ber, jogabyňy degişli emojiler bilen azyrak bezeşdir.
     """
     try:
         response = model.generate_content(prompt)
         await message.reply(response.text)
     except Exception as e:
-        await message.reply("Üzgünüm, bir hata oluştu. 😢")
+        await message.reply("Bagyşlaň, bir ýalňyşlyk döredi. 😢")
         print(e)
 
 # --- Çalıştır ---
